@@ -11,6 +11,9 @@ import { ModalAddSubjectPage } from '../pages/modal-add-subject/modal-add-subjec
 // Import the AF2 Module
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { ApiRestProvider } from '../providers/api-rest/api-rest';
+
+import { HttpModule } from '@angular/http';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyB9520DFI9G5f5VmMV7v-w8M3GmPs6vK18",
@@ -31,7 +34,8 @@ export const firebaseConfig = {
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -42,7 +46,8 @@ export const firebaseConfig = {
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ApiRestProvider
   ]
 })
 export class AppModule {}

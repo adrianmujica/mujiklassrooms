@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import {ApiRestProvider} from '../../providers/api-rest/api-rest';
+import 'rxjs/add/operator/map';
+import {Observable} from 'rxjs/Rx';
 
 /**
  * Generated class for the ModalAddSubjectPage page.
@@ -22,7 +25,8 @@ export class ModalAddSubjectPage {
 
   subjects: FirebaseListObservable<any[]>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public viewCtrl: ViewController, db: AngularFireDatabase) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    public viewCtrl: ViewController, db: AngularFireDatabase, public apiRest: ApiRestProvider) {
     this.subjects = db.list('/subject');
   }
 
@@ -32,14 +36,13 @@ export class ModalAddSubjectPage {
 
   addSubject(){
     if(this.name != undefined){
-      this.subjects.push({
-        name: this.name,
-        description: this.description
-      }).then( newBill => { 
-        this.navCtrl.pop(); 
-      }, error => { 
-        console.log(error); 
-      });
+      this.apiRest.addSubject(this.name, this.description)
+      .map(res => res)
+      .subscribe(
+        data => {
+          this.close();
+        },
+      );
     } else {
       this.messaje = "The name of subject is requred."
     }
