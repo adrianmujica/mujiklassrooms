@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ModalController, NavParams } from 'ionic-angular';
 
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
+import { ModalAddSubjectPage } from '../modal-add-subject/modal-add-subject';
 
 
 @Component({
@@ -11,10 +12,21 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 })
 export class HomePage {
 
-  items: FirebaseListObservable<any[]>;
+  subjects: FirebaseListObservable<any[]>;
+  prueba: string = "hola";
 
-  constructor(public navCtrl: NavController, db: AngularFireDatabase) {
-    this.items = db.list('/subject');
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, db: AngularFireDatabase) {
+    this.subjects = db.list('/subject');
+  }
+
+  openModal() {
+    console.log("adding subject");
+    let modal = this.modalCtrl.create(ModalAddSubjectPage);
+    modal.present();
+  }
+
+  subjectDetails(subject){
+    console.log(subject.name);
   }
 
 }

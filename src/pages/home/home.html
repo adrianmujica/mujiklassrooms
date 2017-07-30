@@ -7,11 +7,14 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-grid>
     <ion-list>
-      <ion-item class="text" *ngFor="let item of items | async">
-        {{item.name}}
+      <ion-item class="text" *ngFor="let subject of subjects | async">
+        <h2 (click)="subjectDetails(subject)">{{subject.name}}</h2>
       </ion-item>
     </ion-list>
-    </ion-grid>
+
+    <ion-footer text-right padding>
+      <ion-icon (click)="openModal()" name="add-circle"></ion-icon>
+    </ion-footer>
+
 </ion-content>
